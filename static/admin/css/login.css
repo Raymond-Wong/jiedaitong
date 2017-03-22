@@ -1,0 +1,35 @@
+.table_wrapper {
+  padding: 2em;
+  width: 30em;
+  margin: auto;
+  text-align: center;
+  margin-top: 20vh;
+}
+
+table {
+  margin: auto;
+}
+
+table td, table th {
+  padding: 1em;
+  text-align: left;
+}
+
+table input {
+  border: none;
+  outline: none;
+  background-color: white;
+}
+
+.button {
+  width: 100%;
+  padding: 0.5em 0;
+  border: 1px solid black;
+  text-align: center;
+  cursor: pointer;
+}
+
+.button:hover {
+  font-weight: bold;
+  border: 2px solid black;
+}

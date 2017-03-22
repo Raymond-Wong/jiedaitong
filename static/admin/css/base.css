@@ -1,0 +1,55 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  min-width: 70em;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+.vertical_outer {
+  display: table;
+  table-layout: fixed;
+}
+
+.vertical_inner {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+.textEllipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thumbImg {
+  background-color: #d8d8d8;
+  text-align: center;
+  font-size: 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#base_page {
+  width: 100%;
+  padding: 0 5em;
+}
+
+#page_head {
+  margin-top: 2em;
+  font-size: 2em;
+}
