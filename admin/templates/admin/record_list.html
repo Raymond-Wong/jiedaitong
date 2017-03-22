@@ -1,0 +1,33 @@
+{% extends 'admin/widgets/base.html' %}
+
+{% block style %}
+<link type="text/css" rel="stylesheet" href="/static/admin/css/record_list.css">
+{% endblock %}
+
+{% block body %}
+<h1 align="center" id="page_head">借贷记录列表</h1>
+<table id="user_table" class="normal_table">
+  <tr class="head_tr">
+    <th class="id_col">编号</th>
+    <th class="rent_user_col">借款人</th>
+    <th class="identification_col">身份证号</th>
+    <th class="date_col">借款期限</th>
+    <th class="remark_col">备注</th>
+  </tr>
+  {% for record in records %}
+  <tr class="record" rid="{{ record.id }}">
+    <td class="id_col">{{ record.id }}</td>
+    <td class="name_col">{{ record.user.name }}</td>
+    <td class="id_num_col">{{ record.user.certificate_num }}</td>
+    <td class="date_col">{{ record.borrow_date | date:"Y年m月d日"}}至 {{ record.repay_date | date:"Y年m月d日"}}</td>
+    <td class="remark_col">
+      已还利息：{{ record.repaid_interest }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/admin/js/record_list.js"></script>
+{% endblock %}

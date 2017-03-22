@@ -1,0 +1,50 @@
+{% extends 'admin/widgets/base.html' %}
+
+{% block style %}
+<link type="text/css" rel="stylesheet" href="/static/admin/css/user_add.css">
+{% endblock %}
+
+{% block body %}
+<h1 align="center" id="page_head">添加借贷记录</h1>
+<table border="1">
+  <tr>
+    <th>借款人姓名</th>
+    <td><input type="text" name="borrower_name" placeholder="借款人姓名" /></td>
+    <th>借款人证件号</th>
+    <td><input type="text" name="borrower_certificate_num" placeholder="借款人证件号" /></td>
+  </tr>
+  <tr>
+    <th>担保人姓名</th>
+    <td><input type="text" name="guarantor_name" placeholder="担保人姓名" /></td>
+    <th>借款人证件号</th>
+    <td><input type="text" name="guarantor_certificate_num" placeholder="担保人证件号" /></td>
+  </tr>
+  <tr>
+    <th>抵押物</th>
+    <td><input type="text" name="guarantee" placeholder="抵押物" /></td>
+    <th></th><td></td>
+  </tr>
+  <tr>
+    <th>借款金额（元）</th>
+    <td><input type="text" name="money" placeholder="借款金额" /></td>
+    <th>月利息（%）</th>
+    <td><input type="text" name="month_interest_rate" placeholder="月利息" /></td>
+  </tr>
+  <tr>
+    <th>借款日期</th>
+    <td><input type="date" name="borrow_date" placeholder="借款日期" /></td>
+    <th>还款日期</th>
+    <td><input type="date" name="repay_date" placeholder="还款日期" /></td>
+  </tr>
+  <tr>
+    <th>每月还款日期</th>
+    <td><input type="number" name="repay_interest_day" placeholder="每月还款日期" min="1" max="31" /></td>
+    <th></th><td></td>
+  </tr>
+</table>
+<div id="submit_btn" class="button right">添加</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/admin/js/record_add.js"></script>
+{% endblock %}

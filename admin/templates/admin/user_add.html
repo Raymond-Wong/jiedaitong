@@ -1,0 +1,38 @@
+{% extends 'admin/widgets/base.html' %}
+
+{% block style %}
+<link type="text/css" rel="stylesheet" href="/static/admin/css/user_add.css">
+{% endblock %}
+
+{% block body %}
+<h1 align="center" id="page_head">添加用户</h1>
+<table border="1">
+  <tr>
+    <th>姓名</th>
+    <td><input type="text" name="name" placeholder="用户姓名" /></td>
+    <th>手机</th>
+    <td><input type="tel" name="phone" placeholder="用户手机" /></td>
+  </tr>
+  <tr>
+    <th>家庭住址</th>
+    <td><input type="text" name="address" placeholder="用户家庭住址" /></td>
+    <th></th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>证件类型</th>
+    <td>
+      <select name="certificate_type">
+        <option value="0">身份证</option>
+      </select>
+    </td>
+    <th>证件号</th>
+    <td><input type="text" name="certificate_num" placeholder="有效证件号" /></td>
+  </tr>
+</table>
+<div id="submit_btn" class="button right">添加</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/admin/js/user_add.js"></script>
+{% endblock %}

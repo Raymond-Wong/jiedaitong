@@ -1,0 +1,54 @@
+#user_table {
+  width: 100%;
+}
+
+.normal_table {
+  border: 2px solid black;
+}
+
+.normal_table td, .normal_table th {
+  border-right: 1px solid #ccc;
+  text-align: center;
+}
+
+.normal_table td:last-child, .normal_table th:last-child{
+  border-right: none;
+}
+
+.normal_table tr {
+  border-bottom: 1px solid #ccc;
+  height: 1.5em;
+  line-height: 1.5em;
+}
+
+.normal_table tr:last-child {
+  border-bottom: none;
+}
+
+.normal_table tr:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.normal_table tr.head_tr:hover {
+  background-color: inherit;
+}
+
+.id_col {
+  width: 5em;
+}
+
+.name_col {
+  width: 10%;
+  min-width: 6em;
+}
+
+.id_num_col {
+  width: 20%;
+  min-width: 9em;
+}
+
+.date_col {
+  width: 30%;
+  min-width: 20em;
+}

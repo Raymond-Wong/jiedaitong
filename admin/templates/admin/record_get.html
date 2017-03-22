@@ -1,0 +1,49 @@
+{% extends 'admin/widgets/base.html' %}
+
+{% block style %}
+<link type="text/css" rel="stylesheet" href="/static/admin/css/user_add.css">
+{% endblock %}
+
+{% block body %}
+<h1 align="center" id="page_head">添加借贷记录</h1>
+<table border="1">
+  <tr>
+    <th>借款人姓名</th>
+    <td>{{ record.user.name }}</td>
+    <th>借款人证件号</th>
+    <td>{{ record.user.certificate_num }}</td>
+  </tr>
+  <tr>
+    <th>担保人姓名</th>
+    <td>{{ record.guarantor.name }}</td>
+    <th>借款人证件号</th>
+    <td>{{ record.guarantor.certificate_num }}</td>
+  </tr>
+  <tr>
+    <th>抵押物</th>
+    <td>{{ record.guarantee }}</td>
+    <th>借款金额（元）</th>
+    <td>{{ record.money }}</td>
+  </tr>
+  <tr>
+    <th>月利率（%）</th>
+    <td>{{ record.month_interest_rate }}</td>
+    <th>月利息（元）</th>
+    <td>{{ record.month_interest }}</td>
+  </tr>
+  <tr>
+    <th>借款日期</th>
+    <td>{{ record.borrow_date | date:"Y年m月d日" }}</td>
+    <th>还款日期</th>
+    <td>{{ record.repay_date | date:"Y年m月d日" }}</td>
+  </tr>
+  <tr>
+    <th>每月还款日期</th>
+    <td>{{ record.repay_interest_day }}</td>
+    <th>已还利息（元）</th>
+    <td>{{ record.repaid_interest }}</td>
+  </tr>
+</table>
+{% endblock %}
+
+{% block script %}{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'admin/widgets/base.html' %}
+
+{% block style %}
+<link type="text/css" rel="stylesheet" href="/static/admin/css/user_list.css">
+{% endblock %}
+
+{% block body %}
+<h1 align="center" id="page_head">用户-列表</h1>
+<table id="user_table" class="normal_table">
+  <tr class="head_tr">
+    <th class="id_col">编号</th>
+    <th class="name_col">姓名</th>
+    <th class="phone_col">联系方式</th>
+    <th class="address_col">地址</th>
+    <th class="certificate_type_col">证件类型</th>
+    <th class="certificate_num_col">证件号</th>
+  </tr>
+  {% for user in users %}
+  <tr class="head_tr">
+    <th class="id_col">{{ user.id }}</th>
+    <th class="name_col">{{ user.name }}</th>
+    <th class="phone_col">{{ user.phone }}</th>
+    <th class="address_col">{{ user.address }}</th>
+    <th class="certificate_type_col">{{ user.get_certificate_type_display }}</th>
+    <th class="certificate_num_col">{{ user.certificate_num }}</th>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
+
+{% block script %}{% endblock %}
