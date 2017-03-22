@@ -6,6 +6,7 @@ import views
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+  url(r'^$', views.record_list, name='record_list'),
   url(r'record/list', views.record_list, name='record_list'),
   url(r'record/add', views.record_add, name='record_add'),
   url(r'record/get', views.record_get, name='record_get'),
