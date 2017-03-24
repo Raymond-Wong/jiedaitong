@@ -66,7 +66,7 @@ CREATE TABLE `auth_permission` (
   UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
   KEY `auth_permission_37ef4eb4` (`content_type_id`),
   CONSTRAINT `content_type_id_refs_id_d043b34a` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_label` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +212,29 @@ CREATE TABLE `jiedaitong_record` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `jiedaitong_repay_record`
+--
+
+DROP TABLE IF EXISTS `jiedaitong_repay_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `jiedaitong_repay_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime NOT NULL,
+  `last_update_time` datetime NOT NULL,
+  `repay_date` date NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `record_id` int(11) NOT NULL,
+  `money` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jiedaitong_repay_record_6340c63c` (`user_id`),
+  KEY `jiedaitong_repay_record_52103e4c` (`record_id`),
+  CONSTRAINT `record_id_refs_id_9e245920` FOREIGN KEY (`record_id`) REFERENCES `jiedaitong_record` (`id`),
+  CONSTRAINT `user_id_refs_id_69e92419` FOREIGN KEY (`user_id`) REFERENCES `jiedaitong_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `jiedaitong_user`
 --
 
@@ -241,4 +264,4 @@ CREATE TABLE `jiedaitong_user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-22 23:48:56
+-- Dump completed on 2017-03-25  0:41:42

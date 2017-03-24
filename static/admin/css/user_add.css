@@ -30,3 +30,11 @@ input, select {
 input[type="date"] {
   line-height: 20px;
 }
+
+td.btn {
+  cursor: pointer;
+}
+
+td.btn:hover {
+  font-weight: bold;
+}

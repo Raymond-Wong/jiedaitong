@@ -37,13 +37,13 @@
 .id_col {
   width: 5em;
 }
-
+/*
 .name_col {
   width: 10%;
   min-width: 6em;
 }
 
-.id_num_col {
+.money_col, .phone_col {
   width: 20%;
   min-width: 9em;
 }
@@ -51,4 +51,4 @@
 .date_col {
   width: 30%;
   min-width: 20em;
-}
+}*/

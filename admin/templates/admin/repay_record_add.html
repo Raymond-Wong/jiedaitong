@@ -1,0 +1,36 @@
+{% extends 'admin/widgets/base.html' %}
+
+{% block style %}
+<link type="text/css" rel="stylesheet" href="/static/admin/css/user_add.css">
+{% endblock %}
+
+{% block body %}
+<h1 align="center" id="page_head">添加借贷记录</h1>
+<table border="1">
+  <tr>
+    <th>借款人姓名</th>
+    <td><input type="text" name="name" placeholder="借款人姓名" /></td>
+    <th>借款人证件号</th>
+    <td><input type="text" name="certificate_num" placeholder="借款人证件号" /></td>
+  </tr>
+  <tr>
+    <th>借款记录</th>
+    <td colspan="2">
+      <select class="record_list">
+      </select>
+    </td>
+    <td class="btn">点击获取借款记录</td>
+  </tr>
+  <tr>
+    <th>还款日期</th>
+    <td><input type="date" name="repay_date" /></td>
+    <th>还款金额（元）</th>
+    <td><input type="number" name="repay_money" /></td>
+  </tr>
+</table>
+<div id="submit_btn" class="button right">添加</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/admin/js/repay_record_add.js"></script>
+{% endblock %}

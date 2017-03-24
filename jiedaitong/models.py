@@ -26,3 +26,11 @@ class Record(models.Model):
   repaid_money = models.PositiveIntegerField(default=0)
   borrow_date = models.DateField()
   repay_date = models.DateField()
+
+class Repay_Record(models.Model):
+  create_time = models.DateTimeField(auto_now_add=True)
+  last_update_time = models.DateTimeField(auto_now=True)
+  repay_date = models.DateField()
+  user = models.ForeignKey(User)
+  record = models.ForeignKey(Record)
+  money = models.PositiveIntegerField()
