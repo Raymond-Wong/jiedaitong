@@ -1,0 +1,32 @@
+#window_toolbar {
+  width: 100%;
+  height: 2.15em;
+  line-height: 2.15em;
+  background-color: white;
+  border: 1px solid black;
+  border-left: 0;
+  border-right: 0;
+  padding: 0 1em;
+}
+
+#window_toolbar .first_order_menu_name, #window_toolbar .second_order_menu_name {
+  width: 6em;
+  height: 2em;
+  line-height: 2em;
+  border-right: 1px solid black;
+  text-align: center;
+  cursor: pointer;
+}
+
+#window_toolbar .second_order_menu_box {
+  display: none;
+}
+
+#window_toolbar .first_order_menu:first-child .first_order_menu_name {
+  border-left: 1px solid black;
+}
+
+#window_toolbar .second_order_menu_name {
+  border: 1px solid black;
+  border-top: 0;
+}

@@ -15,6 +15,9 @@ from jiedaitong.utils import Response
 
 from jiedaitong.decorators import is_logined
 
+def test(request):
+  return render(request, 'admin/widgets/base.html')
+
 @csrf_exempt
 def login(request):
   if request.method == 'GET':
@@ -42,7 +45,8 @@ def record_list(request):
       record.repaid_interest /= 100.0
       record.month_interest_rate *= 100.0
       record.repaid_interest_month = record.repay_record_set.count()
-    return render(request, 'admin/record_list.html', {'page' : 'record_list', 'records' : records})
+    # records = [records[0]] * 100
+    return render(request, 'admin/record_list.html', {'page' : 'record_list', 'wf_title' : '借贷记录','records' : records})
   data_complete, missing_data = utils.check_data_complete(request.POST, ['certificate_num'])
   if not data_complete:
     return HttpResponse(Response(c=-1, m='未提供参数：%s' % missing_data).toJson(), content_type="application/json")
@@ -67,7 +71,7 @@ def record_list(request):
 @is_logined
 def record_add(request):
   if request.method == 'GET':
-    return render(request, 'admin/record_add.html', {'page' : 'record_add'})
+    return render(request, 'admin/record_add.html', {'page' : 'record_add', 'wf_title' : '添加贷款记录'})
   # 判断数据完备性
   data_complete, missing_data = utils.check_data_complete(request.POST, ['borrower_name', 'borrower_certificate_num', 'guarantor_name', 'guarantor_certificate_num', 'guarantee', 'money', 'month_interest_rate', 'borrow_date', 'repay_date', 'repay_interest_day'])
   if not data_complete:
@@ -121,7 +125,7 @@ def record_get(request):
   record = jiedaitong.models.Record.objects.get(id=int(request.GET.get('rid')))
   record = utils.parse_record(record)
   record.month_interest = record.money * record.month_interest_rate / 100.0
-  return render(request, 'admin/record_get.html', {'record' : record})
+  return render(request, 'admin/record_get.html', {'record' : record, 'wf_title' : '借贷记录详情'})
 
 @csrf_exempt
 @is_logined
@@ -161,7 +165,7 @@ def repay_record_add(request):
 @is_logined
 def user_add(request):
   if request.method == 'GET':
-    return render(request, 'admin/user_add.html', {'page' : 'user_add'})
+    return render(request, 'admin/user_add.html', {'page' : 'user_add', 'wf_title' : '添加用户'})
   # 判断数据完备性
   data_complete, missing_data = utils.check_data_complete(request.POST, ['name', 'phone', 'address', 'certificate_type', 'certificate_num'])
   if not data_complete:
@@ -186,4 +190,4 @@ def user_add(request):
 @is_logined
 def user_list(request):
   users = jiedaitong.models.User.objects.all().order_by('create_time')
-  return render(request, 'admin/user_list.html', {'page' : 'user_list', 'users' : users})
+  return render(request, 'admin/user_list.html', {'page' : 'user_list', 'wf_title' : '用户列表', 'users' : users})

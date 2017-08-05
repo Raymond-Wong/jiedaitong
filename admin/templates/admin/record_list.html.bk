@@ -5,9 +5,10 @@
 {% endblock %}
 
 {% block body %}
+<h1 align="center" id="page_head">借贷记录列表</h1>
 <table id="user_table" class="normal_table">
   <tr class="head_tr">
-    <th class="id_col"><div class="triangle"></div></th>
+    <th class="id_col">编号</th>
     <th class="name_col">姓名</th>
     <th class="money_col">金额</th>
     <th class="phone_col">电话号码</th>

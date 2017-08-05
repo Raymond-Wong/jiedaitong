@@ -1,0 +1,18 @@
+<div id="wf_head">
+  <div id="wf_title" class="textEllipsis">{{ wf_title }}</div>
+  <div id="wf_button_box">
+    <div class="wf_button right fade_button" target="red">x</div>
+    <div class="wf_button right fade_button" target="lightgray">-</div>
+    <div class="wf_button right fade_button" target="lightgray">口</div>
+    <div class="clear"></div>
+  </div>
+  <div id="wf_splitor"><div id="wf_splitor_inner"></div></div>
+</div>
+<div id="wf_placeholder"></div>
+<div id="wf_footer">
+  <div class="wf_tab left{% ifequal page 'record_list' %} active{% endifequal %}"><a href="/admin/record/list">借贷记录列表</a></div>
+  <div class="wf_tab left{% ifequal page 'record_add' %} active{% endifequal %}"><a href="/admin/record/add">添加借贷记录</a></div>
+  <div class="wf_tab left{% ifequal page 'user_list' %} active{% endifequal %}"><a href="/admin/user/list">用户列表</a></div>
+  <div class="wf_tab left{% ifequal page 'user_add' %} active{% endifequal %}"><a href="/admin/user/add">添加用户</a></div>
+  <div class="clear"></div>
+</div>

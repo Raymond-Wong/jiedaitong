@@ -7,15 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <link type="text/css" rel="stylesheet" href="/static/common/css/bootstrap.min.css" />
   <link type="text/css" rel="stylesheet" href="/static/admin/css/base.css">
+  <link type="text/css" rel="stylesheet" href="/static/admin/css/frame.css">
+  <link type="text/css" rel="stylesheet" href="/static/admin/css/toolbar.css">
   <link type="text/css" rel="stylesheet" href="/static/admin/css/nav.css">
   {% block style %}{% endblock %}
 </head>
 <body>
-  <div id="nav">{% include 'admin/widgets/nav.html' %}</div>
-  <div id="base_page">{% block body %}{% endblock %}</div>
+  {% include "admin/widgets/window_frame.html" %}
+  {% block body %}{% endblock %}
+  <div id="foot_placeholder"></div>
 </body>
 <script type="text/javascript" src="/static/common/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="/static/common/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/admin/js/utils.js"></script>
+<script type="text/javascript" src="/static/admin/js/toolbar.js"></script>
 {% block script %}{% endblock %}
 </html>

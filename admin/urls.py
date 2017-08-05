@@ -7,6 +7,7 @@ import views
 
 urlpatterns = patterns('',
   url(r'^$', views.record_list, name='record_list'),
+  url(r'test', views.test, name='test'),
   url(r'record/list', views.record_list, name='record_list'),
   url(r'record/add', views.record_add, name='record_add'),
   url(r'record/repay/add', views.repay_record_add, name='repay_record_add'),

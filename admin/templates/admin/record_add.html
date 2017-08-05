@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<h1 align="center" id="page_head">添加借贷记录</h1>
-<table border="1">
+<table class="normal_table">
   <tr>
     <th>借款人姓名</th>
     <td><input type="text" name="borrower_name" placeholder="借款人姓名" /></td>
@@ -42,7 +41,10 @@
     <th></th><td></td>
   </tr>
 </table>
-<div id="submit_btn" class="button right">添加</div>
+<div class="btn_box">
+  <div id="submit_btn" class="button">添加</div>
+  <div class="button" onclick="window.location.href=window.location.href;">取消</div>
+</div>
 {% endblock %}
 
 {% block script %}
