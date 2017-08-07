@@ -8,7 +8,7 @@ import json
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.core import serializers
+from django.utils import timezone
 
 import jiedaitong.models
 import utils
@@ -176,6 +176,19 @@ def repay_record_add(request):
   record.repaid_interest += money
   record.save()
   return HttpResponse(Response(m='添加还息记录成功').toJson(), content_type="application/json")
+
+@csrf_exempt
+def repay_record_update(request):
+  today = timezone.make_naive(timezone.now(), timezone.get_current_timezone()).date()
+  records = jiedaitong.models.Record.objects.filter(state=1).filter(repay_date__gt=today)
+  for record in records:
+    if (record.repay_interest_day == today.day) or (utils.is_last_day(today) and utils.is_last_day(record.borrow_date)):
+      money = record.month_interest_rate * record.money
+      jiedaitong.models.Repay_Record(user=record.user, repay_date=today, record=record, money=money).save()
+      record.repaid_interest += money
+      record.save()
+  print today, '更新了%d个借贷记录' % records.count()
+  return HttpResponse('')
 
 @csrf_exempt
 @is_logined

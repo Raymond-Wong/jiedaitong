@@ -5,7 +5,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import json
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 '''
 判断keys中的关键字是否都在data中存在
@@ -71,7 +71,11 @@ class JSONEncoder(json.JSONEncoder):
     else:
       return json.JSONEncoder.default(self, obj)
 
-
-
+'''
+判断当前日期是否是当前月份的最后一天
+'''
+def is_last_day(day):
+  next_day = day + timedelta(days=1)
+  return next_day.month != day.month
 
 

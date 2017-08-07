@@ -15,7 +15,7 @@ RECORD_STATE = ((0, u'未放款'), (1, u'已放款'), (2, u'已还清'))
 class Record(models.Model):
   create_time = models.DateTimeField(auto_now_add=True)
   last_update_time = models.DateTimeField(auto_now=True)
-  state = models.PositiveIntegerField(default=0, choices=RECORD_STATE)
+  state = models.PositiveIntegerField(default=1, choices=RECORD_STATE)
   user = models.ForeignKey(User)
   guarantor = models.ForeignKey(User, related_name='guarantee_records')
   guarantee = models.TextField()

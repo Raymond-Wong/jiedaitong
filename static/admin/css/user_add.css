@@ -13,18 +13,37 @@ input, select {
   background-color: white;
 }
 
-.button {
-  width: 100%;
-  padding: 0.5em 0;
+.btn_box {
+  text-align: right;
   margin-top: 1em;
+}
+
+.button {
+  display: inline-block;
+  width: 48%;
+  padding: 0.5em 0;
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid red;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  max-width: 5em;
+  margin: 0 0.5em;
 }
 
 .button:hover {
   font-weight: bold;
   cursor: pointer;
-  border: 2px solid black;
+  border: 2px solid red;
+}
+
+#submit_btn {
+  background-color: rgb(68, 129, 86);
+  border: 1px solid rgb(68, 129, 86);
+}
+
+#submit_btn:hover {
+  border: 2px solid rgb(68, 129, 86);
 }
 
 input[type="date"] {
@@ -37,4 +56,28 @@ td.btn {
 
 td.btn:hover {
   font-weight: bold;
+}
+
+.normal_table {
+  border: 1px solid rgb(206, 206, 206);
+  border-bottom: none;
+}
+
+.normal_table td, .normal_table th {
+  border-right: 1px solid #ccc;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.normal_table td:last-child, .normal_table th:last-child{
+  border-right: none;
+}
+
+.normal_table tr {
+  height: 1.5em;
+  line-height: 1.5em;
+}
+
+.normal_table .head_tr th {
+  font-weight: normal;
 }
