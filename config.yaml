@@ -12,4 +12,4 @@ handlers:
 cron:
 - description: "每天凌晨0点自动更新当天需要付息的记录"
   url: /admin/record/repay/update
-  schedule: "*/1 * * * *"
+  schedule: "0 0 * * *"
