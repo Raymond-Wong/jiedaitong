@@ -7,6 +7,11 @@ html, body {
   background-color: #ffffff;
 }
 
+body {
+  -webkit-user-select:none;
+  -webkit-app-region:drag;
+}
+
 .vertical_outer {
   display: table;
   table-layout: fixed;

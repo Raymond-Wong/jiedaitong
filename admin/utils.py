@@ -3,15 +3,16 @@ import sys
 sys.path.append('..')
 reload(sys)
 sys.setdefaultencoding('utf-8')
+import json
 
-from datetime import date
+from datetime import date, datetime
 
 '''
 判断keys中的关键字是否都在data中存在
 '''
 def check_data_complete(data, keys):
   for key in keys:
-    if data.get(key, None) is None:
+    if data.get(key, None) is None or data.get(key, '').strip() == '':
       return False, key
   return True, None
 
@@ -51,3 +52,26 @@ def parse_record(record):
   record.repaid_interest /= 100.0
   record.repaid_money /= 100.0
   return record
+
+'''
+将django对象转换成字典
+'''
+def object_to_dict(obj):
+  return dict([(attr, getattr(obj, attr)) for attr in [f.name for f in obj._meta.fields]])
+
+'''
+处理包含datetime字段的字典的json encoder
+'''
+class JSONEncoder(json.JSONEncoder):
+  def default(self, obj):
+    if isinstance(obj, datetime):
+      return obj.strftime('%Y-%m-%d %H:%M:%S')
+    elif isinstance(obj, date):
+      return obj.strftime('%Y-%m-%d')
+    else:
+      return json.JSONEncoder.default(self, obj)
+
+
+
+
+

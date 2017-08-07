@@ -3,6 +3,7 @@ import sys
 sys.path.append('..')
 reload(sys)
 sys.setdefaultencoding('utf-8')
+import json
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
@@ -38,40 +39,34 @@ def logout(request):
 @is_logined
 def record_list(request):
   if request.method == 'GET':
-    records = jiedaitong.models.Record.objects.all().order_by('create_time')
-    for record in records:
-      record.money /= 100.0
-      record.month_interest = record.money * record.month_interest_rate
-      record.repaid_interest /= 100.0
-      record.month_interest_rate *= 100.0
-      record.repaid_interest_month = record.repay_record_set.count()
-    # records = [records[0]] * 100
-    return render(request, 'admin/record_list.html', {'page' : 'record_list', 'wf_title' : '借贷记录','records' : records})
-  data_complete, missing_data = utils.check_data_complete(request.POST, ['certificate_num'])
-  if not data_complete:
-    return HttpResponse(Response(c=-1, m='未提供参数：%s' % missing_data).toJson(), content_type="application/json")
-  certificate_num = request.POST.get('certificate_num')
-  start_date = request.POST.get('start', None)
-  end_date = request.POST.get('end', None)
-  # 获取用户
-  if jiedaitong.models.User.objects.filter(certificate_num=certificate_num).count() <= 0:
-    return HttpResponse(Response(c=1, m='待查询用户不存在').toJson(), content_type="application/json")
-  user = jiedaitong.models.User.objects.get(certificate_num=certificate_num)
-  records = jiedaitong.models.Record.objects.filter(user=user)
-  if start_date is not None:
-    records = records.filter(borrow_date__gte=utils.create_date_by_str(start_date))
-  if end_date is not None:
-    records = records.filter(borrow_date__lt=utils.create_date_by_str(end_date))
-  if records.count() <= 0:
-    return HttpResponse(Response(c=1, m='无贷款记录').toJson(), content_type="application/json")
-  records = serializers.serialize('json', records, ensure_ascii=False)
+    raise Http404
+  start = int(request.POST.get('start', '0'))
+  num = request.POST.get('num', 'all')
+  records = jiedaitong.models.Record.objects.all().order_by('create_time')
+  if num == 'all':
+    records = records[start:]
+  else:
+    records = records[start:start + int(num)]
+  dict_records = []
+  for ridx, record in enumerate(records):
+    dict_record = utils.object_to_dict(record)
+    dict_record['money'] /= 100.0
+    dict_record['month_interest'] = dict_record['money'] * record.month_interest_rate
+    dict_record['repaid_interest'] /= 100.0
+    dict_record['month_interest_rate'] *= 100.0
+    dict_record['repaid_interest_month'] = record.repay_record_set.count()
+    dict_record['user'] = dict(name=record.user.name, phone=record.user.phone)
+    dict_record['guarantor'] = None
+    dict_records.append(dict_record)
+  records = json.dumps(dict_records, cls=utils.JSONEncoder)
   return HttpResponse(Response(m=records).toJson(), content_type="application/json")
 
 @csrf_exempt
 @is_logined
 def record_add(request):
   if request.method == 'GET':
-    return render(request, 'admin/record_add.html', {'page' : 'record_add', 'wf_title' : '添加贷款记录'})
+    raise Http404
+    # return render(request, 'admin/record_add.html', {'page' : 'record_add', 'wf_title' : '添加贷款记录'})
   # 判断数据完备性
   data_complete, missing_data = utils.check_data_complete(request.POST, ['borrower_name', 'borrower_certificate_num', 'guarantor_name', 'guarantor_certificate_num', 'guarantee', 'money', 'month_interest_rate', 'borrow_date', 'repay_date', 'repay_interest_day'])
   if not data_complete:
@@ -112,26 +107,47 @@ def record_add(request):
   jiedaitong.models.Record(user=borrower, guarantor=guarantor, guarantee=request.POST.get('guarantee'), money=money, month_interest_rate=month_interest_rate, repay_interest_day=repay_interest_day, borrow_date=borrow_date, repay_date=repay_date).save()
   return HttpResponse(Response(c=0, m='创建借贷记录成功').toJson(), content_type='application/json')
 
+@csrf_exempt
+@is_logined
+def record_delete(request):
+  if request.method == 'GET':
+    raise Http404
+  rid = request.POST.get('id', '0')
+  record = jiedaitong.models.Record.objects.filter(id=rid)
+  if record.count() <= 0:
+    return HttpResponse(Response(c=1, m='待删除记录不存在！').toJson(), content_type="application/json")
+  record = record[0]
+  record.delete()
+  return HttpResponse(Response(c=0, m='删除成功！').toJson(), content_type="application/json")
+
+@csrf_exempt
 @is_logined
 def record_get(request):
-  data_complete, missing_data = utils.check_data_complete(request.GET, ['rid'])
+  if request.method == 'GET':
+    raise Http404
+  data_complete, missing_data = utils.check_data_complete(request.POST, ['rid'])
   if not data_complete:
     raise Http404
-  data_type_right, wrong_type = utils.check_data_type(request.GET, [('rid', int)])
+  data_type_right, wrong_type = utils.check_data_type(request.POST, [('rid', int)])
   if not data_type_right:
     raise Http404
-  if jiedaitong.models.Record.objects.filter(id=int(request.GET.get('rid'))).count() <= 0:
+  if jiedaitong.models.Record.objects.filter(id=int(request.POST.get('rid'))).count() <= 0:
     raise Http404
-  record = jiedaitong.models.Record.objects.get(id=int(request.GET.get('rid')))
+  record = jiedaitong.models.Record.objects.get(id=int(request.POST.get('rid')))
   record = utils.parse_record(record)
-  record.month_interest = record.money * record.month_interest_rate / 100.0
-  return render(request, 'admin/record_get.html', {'record' : record, 'wf_title' : '借贷记录详情'})
+  dict_record = utils.object_to_dict(record)
+  dict_record['user'] = utils.object_to_dict(record.user)
+  dict_record['guarantor'] = utils.object_to_dict(record.guarantor)
+  dict_record['month_interest'] = record.money * record.month_interest_rate / 100.0
+  record = json.dumps(dict_record, cls=utils.JSONEncoder)
+  return HttpResponse(Response(c=0, m=record).toJson(), content_type="application/json")
 
 @csrf_exempt
 @is_logined
 def repay_record_add(request):
   if request.method == 'GET':
-    return render(request, 'admin/repay_record_add.html', {'page' : 'repay_record_add'})
+    raise Http404
+    # return render(request, 'admin/repay_record_add.html', {'page' : 'repay_record_add'})
   data_complete, missing_data = utils.check_data_complete(request.POST, ['name', 'certificate_num', 'rid', 'repay_date', 'money'])
   if not data_complete:
     return HttpResponse(Response(c=-1, m='未提供参数：%s' % missing_data).toJson(), content_type="application/json")
@@ -165,7 +181,7 @@ def repay_record_add(request):
 @is_logined
 def user_add(request):
   if request.method == 'GET':
-    return render(request, 'admin/user_add.html', {'page' : 'user_add', 'wf_title' : '添加用户'})
+    raise Http404
   # 判断数据完备性
   data_complete, missing_data = utils.check_data_complete(request.POST, ['name', 'phone', 'address', 'certificate_type', 'certificate_num'])
   if not data_complete:
@@ -187,7 +203,34 @@ def user_add(request):
   jiedaitong.models.User(name=name, phone=phone, address=address, certificate_type=certificate_type, certificate_num=certificate_num).save()
   return HttpResponse(Response(c=0, m='创建用户成功').toJson(), content_type="application/json")
 
+@csrf_exempt
+@is_logined
+def user_delete(request):
+  if request.method == 'GET':
+    raise Http404
+  uid = request.POST.get('id', '0')
+  user = jiedaitong.models.User.objects.filter(id=uid)
+  if user.count() <= 0:
+    return HttpResponse(Response(c=1, m='待删除用户不存在！').toJson, content_type="application/json")
+  user = user[0]
+  print user.name
+  user.delete()
+  return HttpResponse(Response(c=0, m='删除成功！').toJson(), content_type="application/json")
+
+@csrf_exempt
 @is_logined
 def user_list(request):
+  if request.method == 'GET':
+    raise Http404
+  start = int(request.POST.get('start', '0'))
+  num = request.POST.get('num', 'all')
   users = jiedaitong.models.User.objects.all().order_by('create_time')
-  return render(request, 'admin/user_list.html', {'page' : 'user_list', 'wf_title' : '用户列表', 'users' : users})
+  if num == 'all':
+    users = users[start:]
+  else:
+    users = users[start:start + int(num)]
+  dict_users = []
+  for user in users:
+    dict_users.append(utils.object_to_dict(user))
+  users = json.dumps(dict_users, cls=utils.JSONEncoder)
+  return HttpResponse(Response(c=0, m=users).toJson(), content_type="application/json")
