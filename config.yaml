@@ -10,6 +10,6 @@ handlers:
   static_dir: static
 
 cron:
-- description: repay_record_autp_update
+- description: "每天凌晨0点自动更新当天需要付息的记录"
   url: /admin/record/repay/update
   schedule: "*/1 * * * *"
